@@ -180,21 +180,11 @@ define(function (require, exports, module) {
     CommandManager.register("Next Document in List", GO_NEXT_COMMAND_ID, goNextFile);
     CommandManager.register("Previous Document in List", GO_PREV_COMMAND_ID, goPrevFile);
     
-    // Unbind back/forward nav shortcuts from the default indent/unindent commands so we can use them.
-    // (They are redundant anyway, since Tab/Shift+Tab do the same thing)
-    KeyBindingManager.removeBinding("Ctrl-[");
-    KeyBindingManager.removeBinding("Ctrl-]");
-    
     // Add menus items in reverse order: we can't use Menus.BEFORE relative to a divider, so
     // use Menus.AFTER on the item just above the divider
     var menu = Menus.getMenu(Menus.AppMenuBar.NAVIGATE_MENU);
-    menu.addMenuItem(GO_PREV_COMMAND_ID, "Ctrl-[", Menus.AFTER, Commands.NAVIGATE_PREV_DOC);
-    menu.addMenuItem(GO_NEXT_COMMAND_ID, "Ctrl-]", Menus.AFTER, Commands.NAVIGATE_PREV_DOC);
+    menu.addMenuItem(GO_PREV_COMMAND_ID, "Ctrl-Shift-[", Menus.AFTER, Commands.NAVIGATE_PREV_DOC);
+    menu.addMenuItem(GO_NEXT_COMMAND_ID, "Ctrl-Shift-]", Menus.AFTER, Commands.NAVIGATE_PREV_DOC);
     menu.addMenuDivider(Menus.AFTER, Commands.NAVIGATE_PREV_DOC);
-    
-    // Command to launch our Quick Open mode
-    var SEARCH_WORKING_SET_COMMAND_ID = "pflynn.searchWorkingSetFiles";
-    CommandManager.register("Go to Open File", SEARCH_WORKING_SET_COMMAND_ID, beginFileSearch);
-    menu.addMenuItem(SEARCH_WORKING_SET_COMMAND_ID, "Ctrl-Shift-E", Menus.AFTER, GO_PREV_COMMAND_ID);
     
 });
